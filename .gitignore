@@ -1,0 +1,48 @@
+# Visual Studio
+.vs/
+
+# Build folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Visual Studio cache
+*.cache
+
+# Rider
+.idea/
+
+# ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Publish output
+publish/
+
+# NuGet packages (if using packages folder)
+packages/
+
+# Test results
+TestResults/
+
+# Generated files
+Generated\ Files/
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# OS files
+.DS_Store
