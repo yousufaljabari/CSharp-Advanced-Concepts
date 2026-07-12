@@ -26,5 +26,10 @@ namespace TestProject
                 MessageBox.Show("Fuck You");
             }
         }
+
+        private void userControl11_OnCalculationComplete(object sender, TestProject.UserControl1.CalculationCompleteEventArgs e)
+        {
+            MessageBox.Show($"Result = {e.Result},Val1 : {e.val1}, Val2 : {e.Val2}");
+        }
     }
 }

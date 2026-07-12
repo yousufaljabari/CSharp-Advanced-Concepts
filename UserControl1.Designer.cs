@@ -34,6 +34,7 @@
             textBoxSecondNumber = new TextBox();
             labelResullt = new Label();
             buttonCalculate = new Button();
+            button1 = new Button();
             SuspendLayout();
             // 
             // textBoxFirstNumber
@@ -88,10 +89,21 @@
             buttonCalculate.UseVisualStyleBackColor = true;
             buttonCalculate.Click += buttonCalculate_Click;
             // 
+            // button1
+            // 
+            button1.Location = new Point(751, 104);
+            button1.Name = "button1";
+            button1.Size = new Size(94, 29);
+            button1.TabIndex = 6;
+            button1.Text = "button1";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
             // UserControl1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(button1);
             Controls.Add(buttonCalculate);
             Controls.Add(labelResullt);
             Controls.Add(textBoxSecondNumber);
@@ -99,7 +111,7 @@
             Controls.Add(labelSum);
             Controls.Add(textBoxFirstNumber);
             Name = "UserControl1";
-            Size = new Size(629, 401);
+            Size = new Size(947, 519);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -112,5 +124,6 @@
         private TextBox textBoxSecondNumber;
         private Label labelResullt;
         private Button buttonCalculate;
+        private Button button1;
     }
 }

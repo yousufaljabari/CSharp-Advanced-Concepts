@@ -39,6 +39,7 @@
             userControl11.TabIndex = 0;
             userControl11.OnCalculationSelected += userControl11_OnCalculationSelected;
             userControl11.onSelectedName += userControl11_onSelectedName;
+            userControl11.OnCalculationComplete += userControl11_OnCalculationComplete;
             // 
             // Form1
             // 
