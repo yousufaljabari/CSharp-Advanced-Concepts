@@ -1,4 +1,6 @@
-namespace TestProject
+using TestProject;
+
+namespace CSharpAdvanceWinform.CSharpWindowsForm
 {
     internal static class Program
     {
