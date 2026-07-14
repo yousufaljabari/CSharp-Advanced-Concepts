@@ -85,26 +85,26 @@ namespace CourseCsharp
 
 
 
-        static void Main(string[] args)
-        {
-            Thermostat thermostat = new Thermostat();
-            Printer printer = new Printer();
-            Display display = new Display();
+        //static void Main(string[] args)
+        //{
+        //    Thermostat thermostat = new Thermostat();
+        //    Printer printer = new Printer();
+        //    Display display = new Display();
 
-            display.Subscribe(thermostat);
-            printer.Subscribe(thermostat);
-
-
-            thermostat.SetTemprature(25);
-
-            thermostat.SetTemprature(30);
-
-            thermostat.SetTemprature(35);
-            thermostat.SetTemprature(50);
+        //    display.Subscribe(thermostat);
+        //    printer.Subscribe(thermostat);
 
 
+        //    thermostat.SetTemprature(25);
 
-            Console.ReadLine();
-        }
+        //    thermostat.SetTemprature(30);
+
+        //    thermostat.SetTemprature(35);
+        //    thermostat.SetTemprature(50);
+
+
+
+        //    Console.ReadLine();
+        //}
     }
 }
