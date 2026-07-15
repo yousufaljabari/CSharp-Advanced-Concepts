@@ -5,7 +5,10 @@ namespace CourseCsharp
 {
     internal class Program
     {
-        public class TemperaturerChangedEventsArgs:EventArgs
+        /// <summary>
+        /// Tembrature Example using EventsArgs
+        /// </summary>
+        public class TemperaturerChangedEventsArgs : EventArgs
         {
             public double OldTemperature { get; }
             public double NewTemperature { get; }
@@ -16,11 +19,11 @@ namespace CourseCsharp
             {
                 OldTemperature = oldTemperature;
                 NewTemperature = newTemperature;
-                Difference = newTemperature - oldTemperature ;
+                Difference = newTemperature - oldTemperature;
             }
         }
 
-        public class Thermostat  
+        public class Thermostat
         {
             public event EventHandler<TemperaturerChangedEventsArgs> OnTempraturechanged;
 
@@ -29,7 +32,7 @@ namespace CourseCsharp
 
             public void SetTemprature(double newTemprature)
             {
-                if(newTemprature!=CurrentTemprature)
+                if (newTemprature != CurrentTemprature)
                 {
                     OldTemprature = CurrentTemprature;
                     CurrentTemprature = newTemprature;
@@ -39,7 +42,7 @@ namespace CourseCsharp
 
             private void OnTempratureChanged(double OldTemprature, double CurrentTemprature)
             {
-                OnTempratureChanged(new TemperaturerChangedEventsArgs(OldTemprature,CurrentTemprature));
+                OnTempratureChanged(new TemperaturerChangedEventsArgs(OldTemprature, CurrentTemprature));
             }
 
             protected virtual void OnTempratureChanged(TemperaturerChangedEventsArgs e)
@@ -79,6 +82,71 @@ namespace CourseCsharp
                 Console.WriteLine($"New Temprature is Changed = {e.NewTemperature}");
             }
         }
+        /// <summary>
+        /// Publisher Example using object 
+        /// </summary>
+        public class NewsAritcle
+        {
+            public string Title { get; }
+            public string Content { get; }
+
+            public NewsAritcle(string title, string content)
+            {
+                Title = title;
+                Content = content;
+            }
+        }
+
+        public class NewsPublisher
+        {
+            public event EventHandler<NewsAritcle> NewNewsPublisher;
+
+            public void PublishNews(string Tilte, string Content)
+            {
+                var Article = new NewsAritcle(Tilte, Content);
+                OnNewsPublished(Article);
+
+            }
+
+            protected virtual void OnNewsPublished(NewsAritcle newsAritcle)
+            {
+                NewNewsPublisher?.Invoke(this, newsAritcle);
+            }
+
+        }
+
+        public class NewsSubscriber
+        {
+            public string name { get; }
+
+            public NewsSubscriber(string name)
+            {
+                this.name = name;
+            }
+            public void Subscribe(NewsPublisher publisher)
+            {
+                publisher.NewNewsPublisher += HandleNewNews;
+            }
+
+            public void UnSubscribe(NewsPublisher publisher)
+            {
+                publisher.NewNewsPublisher -= HandleNewNews;
+            }
+
+            public void HandleNewNews(object sender, NewsAritcle Aritcle)
+            {
+                Console.WriteLine($"{name} received a new news article : ");
+                Console.WriteLine($"TItle : {Aritcle.Title}");
+                Console.WriteLine($"Content : {Aritcle.Content}");
+                Console.ReadLine();
+            }
+
+
+
+        }
+
+
+
 
 
 
@@ -106,5 +174,37 @@ namespace CourseCsharp
 
         //    Console.ReadLine();
         //}
+
+        static void Main(string[] args)
+        {
+            NewsPublisher publisher = new NewsPublisher();
+            NewsSubscriber subscriber1 = new NewsSubscriber("Subscriber 1");
+
+            subscriber1.Subscribe(publisher);
+
+
+
+            NewsSubscriber subscriber2 = new NewsSubscriber("Subscriber 2");
+            subscriber2.Subscribe(publisher);
+
+
+            publisher.PublishNews("Breaking News", "A significant event just happened!");
+
+            publisher.PublishNews("Tech Update", "New gadgets are hitting the market.");
+
+            // Unsubscribe a subscriber (e.g., subscriber1)
+            subscriber1.UnSubscribe(publisher);
+
+            publisher.PublishNews("Weather Forecast", "Expect sunny weather for the weekend.");
+
+            // Unsubscribe another subscriber (e.g., subscriber2)
+            subscriber2.UnSubscribe(publisher);
+
+            publisher.PublishNews("Final Edition", "Last news update for today.");
+
+
+
+
+        }
     }
 }
