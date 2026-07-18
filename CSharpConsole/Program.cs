@@ -82,9 +82,34 @@ namespace CourseCsharp
                 Console.WriteLine($"New Temprature is Changed = {e.NewTemperature}");
             }
         }
+
+        //static void Main(string[] args)
+        //{
+        //    Thermostat thermostat = new Thermostat();
+        //    Printer printer = new Printer();
+        //    Display display = new Display();
+
+        //    display.Subscribe(thermostat);
+        //    printer.Subscribe(thermostat);
+
+
+        //    thermostat.SetTemprature(25);
+
+        //    thermostat.SetTemprature(30);
+
+        //    thermostat.SetTemprature(35);
+        //    thermostat.SetTemprature(50);
+
+
+
+        //    Console.ReadLine();
+        //}
+
+
         /// <summary>
         /// Publisher Example using object 
         /// </summary>
+        
         public class NewsAritcle
         {
             public string Title { get; }
@@ -142,40 +167,9 @@ namespace CourseCsharp
             }
 
 
-
         }
 
-
-
-
-
-
-
-
-
-        //static void Main(string[] args)
-        //{
-        //    Thermostat thermostat = new Thermostat();
-        //    Printer printer = new Printer();
-        //    Display display = new Display();
-
-        //    display.Subscribe(thermostat);
-        //    printer.Subscribe(thermostat);
-
-
-        //    thermostat.SetTemprature(25);
-
-        //    thermostat.SetTemprature(30);
-
-        //    thermostat.SetTemprature(35);
-        //    thermostat.SetTemprature(50);
-
-
-
-        //    Console.ReadLine();
-        //}
-
-        static void Main(string[] args)
+          /*static void Main(string[] args)
         {
             NewsPublisher publisher = new NewsPublisher();
             NewsSubscriber subscriber1 = new NewsSubscriber("Subscriber 1");
@@ -206,5 +200,147 @@ namespace CourseCsharp
 
 
         }
+          */
+
+
+        /// <summary>
+        /// Order Example
+        /// </summary>
+        /*
+        Learned and implemented the Publisher–Subscriber pattern using C# Events and Delegates through an Order Example.
+        */
+        public class OrderEventArgs : EventArgs
+        {
+            public int OrderID { get; }
+            public int OrderTotalPrice { get; }
+            public string ClientEmail { get; }
+
+            public OrderEventArgs(int OrderID, int OrderTotalPrice, string ClientEmail)
+            {
+                this.OrderID = OrderID;
+                this.OrderTotalPrice = OrderTotalPrice;
+                this.ClientEmail = ClientEmail;
+            }
+
+
+        }
+
+        public class Order
+        {
+            public event EventHandler<OrderEventArgs> OnOrderCreated;
+
+            public void Create(int OrderID, int OrderTotalPrice, string ClientEmail)
+            {
+                Console.WriteLine("New Order Created , now will notify everyone by raising the event.\n");
+                if (OnOrderCreated != null)
+                {
+                    OnOrderCreated(this, new OrderEventArgs(OrderID, OrderTotalPrice, ClientEmail));
+                }
+
+            }
+        }
+
+        public class EmailService
+        {
+            public void Subscribe(Order order)
+            {
+                order.OnOrderCreated += HandleNewOrder;
+            }
+
+            public void UnSubscribe(Order order)
+            {
+                order.OnOrderCreated -= HandleNewOrder;
+            }
+
+            public void HandleNewOrder(object sender, OrderEventArgs e)
+            {
+                Console.WriteLine("-------- Email Service --------");
+                Console.WriteLine($"Order ID: {e.OrderID}");
+                Console.WriteLine($"Order Price: {e.OrderTotalPrice}");
+                Console.WriteLine($"Email: {e.ClientEmail}");
+                Console.WriteLine("Send an Email\n");
+            }
+        }
+
+        public class SMSService
+        {
+            public void Subscribe(Order order)
+            {
+                order.OnOrderCreated += HandleNewOrder;
+            }
+
+            public void UnSubscribe(Order order)
+            {
+                order.OnOrderCreated -= HandleNewOrder;
+            }
+
+
+            public void HandleNewOrder(object sender, OrderEventArgs e)
+            {
+                Console.WriteLine("-------- SMS Service --------");
+                Console.WriteLine($"Order ID: {e.OrderID}");
+                Console.WriteLine("Send an SMS\n");
+            }
+        }
+
+        public class ShippingService
+        {
+            public void Subscribe(Order order)
+            {
+                order.OnOrderCreated += HandleNewOrder;
+            }
+
+            public void UnSubscribe(Order order)
+            {
+                order.OnOrderCreated -= HandleNewOrder;
+            }
+
+            public void HandleNewOrder(object sender, OrderEventArgs e)
+            {
+                Console.WriteLine("-------- Shipping Service --------");
+                Console.WriteLine($"Order ID: {e.OrderID}");
+                Console.WriteLine("Prepare order for shipping\n");
+            }
+        }
+
+        /*static void Main(string[] args)
+        {
+            
+            Order order = new Order();
+
+            
+            EmailService emailService = new EmailService();
+            SMSService smsService = new SMSService();
+            ShippingService shippingService = new ShippingService();
+
+            
+            emailService.Subscribe(order);
+            smsService.Subscribe(order);
+            shippingService.Subscribe(order);
+
+            // Create a new order
+            order.Create(
+                1001,
+                250,
+                "client@gmail.com"
+            );
+
+            Console.ReadKey();
+        }
+*/
+
+        /// <summary>
+        /// Order Example
+        /// </summary>
+
+
+
+
+
+
+
+
+
+
     }
 }
